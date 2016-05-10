@@ -19,13 +19,6 @@
  **/
 package com.quartz.monitor.util;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.struts2.ServletActionContext;
-
-import com.quartz.monitor.action.InitAction;
-import com.quartz.monitor.core.QuartzInstanceContainer;
-import com.quartz.monitor.object.QuartzInstance;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -34,6 +27,13 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.ServletActionContext;
+
+import com.quartz.monitor.action.InitAction;
+import com.quartz.monitor.core.QuartzInstanceContainer;
+import com.quartz.monitor.object.QuartzInstance;
+
 /**
  * @author <a href="mailto:royrusso@gmail.com">Roy Russo</a>
  *         Date: Apr 7, 2011 3:19:10 PM
@@ -41,14 +41,15 @@ import javax.servlet.http.HttpSession;
 public class Tools
 {
    public static final String DATE_FORMAT_DEFAULT = "MM/dd/yy HH:mm:ss z";
+    public static final String DATE_FORMAT_YYYYMMDDHHMMSS = "yyyy-MM-dd HH:mm:ss";
 
    public static String generateUUID()
    {
-      UUID id = UUID.randomUUID();
+      final UUID id = UUID.randomUUID();
       return id.toString();
    }
 
-   public static String toStringFromDate(Date date, String format)
+   public static String toStringFromDate(final Date date, String format)
    {
       try
       {
@@ -56,37 +57,37 @@ public class Tools
          {
             format = DATE_FORMAT_DEFAULT;
          }
-         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
          return simpleDateFormat.format(date);
       }
-      catch (Exception e)
+      catch (final Exception e)
       {
          //
       }
       return null;
    }
-   
-   public static int getPageSize(int zong,int pageSize){
+
+   public static int getPageSize(final int zong,final int pageSize){
 	   int pageCount=zong/pageSize;
 		if(zong%pageSize!=0){
 			pageCount++;
 		}
 		return pageCount;
    }
-   
+
    public static QuartzInstance getQuartzInstance(){
-	   
-	   HttpServletRequest request=ServletActionContext.getRequest();//得到request对象
-	   HttpSession session=request.getSession();//通过request得到session对象
-	   String uuid = (String) session.getAttribute("configId");
-	   Map<String,QuartzInstance> quartzInstanceMap = QuartzInstanceContainer.getQuartzInstanceMap();
+
+	   final HttpServletRequest request=ServletActionContext.getRequest();//得到request对象
+	   final HttpSession session=request.getSession();//通过request得到session对象
+	   final String uuid = (String) session.getAttribute("configId");
+	   final Map<String,QuartzInstance> quartzInstanceMap = QuartzInstanceContainer.getQuartzInstanceMap();
 	   if(quartzInstanceMap == null || quartzInstanceMap.size() == 0 || uuid == null ||uuid.equals("")){return null;}
 	   QuartzInstance instance = quartzInstanceMap.get(uuid);
-	   
+
 	   if(instance == null){
 			try {
 				new InitAction().execute();
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -94,5 +95,5 @@ public class Tools
 		}
 	   return instance;
    }
-   
+
 }
