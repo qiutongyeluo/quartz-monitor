@@ -223,15 +223,15 @@ public class JobAction extends ActionSupport {
                     object.put("fireTime",
                             Tools.toStringFromDate(jEvent.getFireTime(),
                                     Tools.DATE_FORMAT_YYYYMMDDHHMMSS));
-                    object.put("nextFireTime", Tools
-                            .toStringFromDate(jEvent.getNextFireTime(),
+                    object.put("nextFireTime",
+                            Tools.toStringFromDate(jEvent.getNextFireTime(),
                                     Tools.DATE_FORMAT_YYYYMMDDHHMMSS));
-                    object.put("previousFireTime", Tools.toStringFromDate(
-                            jEvent.getPreviousFireTime(),
-                            Tools.DATE_FORMAT_YYYYMMDDHHMMSS));
+                    object.put("previousFireTime",
+                            Tools.toStringFromDate(jEvent.getPreviousFireTime(),
+                                    Tools.DATE_FORMAT_YYYYMMDDHHMMSS));
                     object.put("scheduledFireTime", Tools.toStringFromDate(
                             jEvent.getScheduledFireTime(),
-                            Tools.DATE_FORMAT_YYYYMMDDHHMMSS));
+                                    Tools.DATE_FORMAT_YYYYMMDDHHMMSS));
                     jsonArray.add(object);
                     if (i == EventService.getMaxShowEventListSize() - 1) {
                         break;

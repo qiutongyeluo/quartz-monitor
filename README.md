@@ -27,6 +27,13 @@ org.quartz.scheduler.jmx.export = true
 ```xml
 JAVA_OPTS='-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=2911 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dorg.quartz.scheduler.jmx.export=true'
 ```
+或者在catalina.sh第一行下面添加：
+set CATALINA_OPTS=%CATALINA_OPTS% -Djava.rmi.server.hostname=localhost
+set CATALINA_OPTS=%CATALINA_OPTS% -Djavax.management.builder.initial=
+set CATALINA_OPTS=%CATALINA_OPTS% -Dcom.sun.management.jmxremote=true
+set CATALINA_OPTS=%CATALINA_OPTS% -Dcom.sun.management.jmxremote.port=1099
+set CATALINA_OPTS=%CATALINA_OPTS% -Dcom.sun.management.jmxremote.ssl=false
+set CATALINA_OPTS=%CATALINA_OPTS% -Dcom.sun.management.jmxremote.authenticate=false
 3）配置Quartz-Monitor
 
 将quartz-monitor放入tomcat，配置好远程quartz的jmx信息，如jmx端口和ip，即可使用。
