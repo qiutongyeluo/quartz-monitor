@@ -25,15 +25,22 @@ org.quartz.scheduler.jmx.export = true
 
 比如我使用的是TOMCAT，并且在Linux上，我需要往catalina.sh中加入：
 ```xml
-JAVA_OPTS='-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=2911 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dorg.quartz.scheduler.jmx.export=true'
+JAVA_OPTS='-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=2911 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dorg.quartz.scheduler.jmx.export=true'
 ```
-或者在catalina.sh第一行下面添加：
-set CATALINA_OPTS=%CATALINA_OPTS% -Djava.rmi.server.hostname=localhost
-set CATALINA_OPTS=%CATALINA_OPTS% -Djavax.management.builder.initial=
-set CATALINA_OPTS=%CATALINA_OPTS% -Dcom.sun.management.jmxremote=true
+或者windows下，在catalina.bat下面添加：
+set CATALINA_OPTS=%CATALINA_OPTS% -Dcom.sun.management.jmxremote
 set CATALINA_OPTS=%CATALINA_OPTS% -Dcom.sun.management.jmxremote.port=1099
 set CATALINA_OPTS=%CATALINA_OPTS% -Dcom.sun.management.jmxremote.ssl=false
 set CATALINA_OPTS=%CATALINA_OPTS% -Dcom.sun.management.jmxremote.authenticate=false
+或者linux下，在catalina.sh加入：
+export JAVA_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=7044 -Dcom.sun.management.jmxremote.rmi.port=7044 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
+
+注： 加入catalina.sh的位置有以下要求，否则会在./shutdown.sh时报错，因为shutdown时也会调用catalina.sh。
+必须放到以下语句下面：
+① elif [ "$1" = "run" ]; then        // ./startup.sh时会调用
+② elif [ "$1" = "start" ]; then      // ./catalina.sh run时会调用
+
+
 3）配置Quartz-Monitor
 
 将quartz-monitor放入tomcat，配置好远程quartz的jmx信息，如jmx端口和ip，即可使用。
